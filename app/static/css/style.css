@@ -123,6 +123,35 @@ body::before {
     margin: 0 auto;
 }
 
+/* ========== HERO HEADER ========== */
+.hero-header {
+    position: relative;
+    margin: -32px -40px 36px;
+    padding: 48px 40px 40px;
+    border-radius: 0 0 var(--radius) var(--radius);
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.hero-aurora {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: url('/static/img/lulea-harbor.svg') center bottom / cover no-repeat;
+}
+
+.hero-aurora::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 50%, var(--bg) 100%);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
+
 /* Clock */
 .clock-wrapper {
     text-align: center;
@@ -136,11 +165,10 @@ body::before {
     display: inline-flex;
     align-items: baseline;
     justify-content: center;
-    background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, var(--accent-light) 100%);
+    background: linear-gradient(180deg, rgba(180,195,220,0.95) 0%, rgba(60,90,160,0.7) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    filter: drop-shadow(0 0 20px var(--glow-blue));
 }
 
 .clock-digit {
@@ -804,6 +832,31 @@ body::before {
     background: var(--card-alt);
     border-color: var(--border-hover);
     color: var(--accent-light);
+}
+
+/* ========== DAILY QUOTE ========== */
+.daily-quote {
+    margin-bottom: 28px;
+    padding: 0 4px;
+}
+
+.daily-quote-text {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    line-height: 1.4;
+    background: linear-gradient(135deg, var(--text-mid) 0%, var(--text-dim) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+}
+
+.daily-quote-source {
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
 }
 
 /* ========== LOADING & ERROR ========== */

@@ -325,6 +325,22 @@ async function loadSong() {
     }
 }
 
+// Quote of the day
+async function loadQuote() {
+    const card = document.getElementById('quote-card');
+    try {
+        const q = await fetchJSON('/api/quote');
+        card.innerHTML = `
+            <div class="daily-quote">
+                <div class="daily-quote-text">"${q.quote}"</div>
+                <div class="daily-quote-source">— ${q.source}</div>
+            </div>
+        `;
+    } catch (e) {
+        card.textContent = '';
+    }
+}
+
 // Initial load
 loadSeinfeld();
 loadWeather();
@@ -334,6 +350,7 @@ loadSports();
 loadGuitar();
 loadComic();
 loadSong();
+loadQuote();
 
 // Refresh intervals
 setInterval(loadSystem, 30000);

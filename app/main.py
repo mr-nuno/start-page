@@ -4,7 +4,7 @@ import logging
 from flask import Flask, jsonify, send_from_directory
 
 from app.config import CACHE_TTL
-from app.services import weather, news, sports, system, guitar, comic, seinfeld, songofday
+from app.services import weather, news, sports, system, guitar, comic, seinfeld, songofday, quotes
 
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger(__name__)
@@ -85,6 +85,11 @@ def api_seinfeld():
 @app.route("/api/song")
 def api_song():
     return jsonify(_get_cached("song", 86400, songofday.fetch))
+
+
+@app.route("/api/quote")
+def api_quote():
+    return jsonify(_get_cached("quote", 86400, quotes.fetch))
 
 
 # Start background refresh thread
