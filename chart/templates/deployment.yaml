@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    app: start-page
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: start-page
+  template:
+    metadata:
+      labels:
+        app: start-page
+    spec:
+      securityContext:
+        runAsUser: {{ .Values.securityContext.runAsUser }}
+      containers:
+        - name: start-page
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.port }}
+          env:
+            - name: TZ
+              value: {{ .Values.env.TZ }}
+          volumeMounts:
+            - name: thermal
+              mountPath: /sys/class/thermal
+              readOnly: true
+            - name: hwmon
+              mountPath: /sys/class/hwmon
+              readOnly: true
+            - name: host-root
+              mountPath: /host
+              readOnly: true
+            - name: vault
+              mountPath: /vault
+      volumes:
+        - name: thermal
+          hostPath:
+            path: {{ .Values.hostPaths.thermal }}
+        - name: hwmon
+          hostPath:
+            path: {{ .Values.hostPaths.hwmon }}
+        - name: host-root
+          hostPath:
+            path: {{ .Values.hostPaths.hostRoot }}
+        - name: vault
+          hostPath:
+            path: {{ .Values.hostPaths.vault }}

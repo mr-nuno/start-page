@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    app: start-page
+spec:
+  selector:
+    app: start-page
+  ports:
+    - port: 80
+      targetPort: {{ .Values.port }}
