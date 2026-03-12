@@ -1,0 +1,13 @@
+services:
+  startpage:
+    build: .
+    container_name: start-page
+    ports:
+      - "8080:5000"
+    volumes:
+      - /sys/class/thermal:/sys/class/thermal:ro
+      - /sys/class/hwmon:/sys/class/hwmon:ro
+      - /:/host:ro
+    restart: unless-stopped
+    environment:
+      - TZ=Europe/Stockholm

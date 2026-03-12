@@ -1,0 +1,6 @@
+flask==3.1.*
+requests==2.32.*
+feedparser==6.0.*
+beautifulsoup4==4.12.*
+psutil==6.1.*
+gunicorn==23.*
