@@ -51,6 +51,7 @@ const H2 = {
     comic: '<h2><span class="icon">&#128214;</span> Calvin & Hobbes</h2>',
     hockey: '<h2><span class="icon">&#127954;</span> Luleå Hockey</h2>',
     song: '<h2><span class="icon">&#127925;</span> Song of the Day</h2>',
+    youtube: '<h2><span class="icon">&#127909;</span> The Daily Show</h2>',
     obsidian: '<h2><span class="icon">&#128218;</span> Obsidian</h2>',
 };
 
@@ -294,6 +295,30 @@ async function loadSeinfeld() {
     }
 }
 
+// YouTube - The Daily Show
+async function loadYouTube() {
+    const card = document.getElementById('youtube-card');
+    try {
+        const y = await fetchJSON('/api/youtube');
+        if (y.error) { card.innerHTML = `${H2.youtube}<div class="error">${y.error}</div>`; return; }
+
+        card.innerHTML = `
+            ${H2.youtube}
+            <div class="yt-container">
+                <div class="yt-embed">
+                    <iframe src="https://www.youtube.com/embed/${y.video_id}" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                </div>
+                <div class="yt-info">
+                    <div class="yt-title">${y.title}</div>
+                    <div class="yt-time">${timeAgo(y.published)}</div>
+                </div>
+            </div>
+        `;
+    } catch (e) {
+        card.innerHTML = `${H2.youtube}<div class="error">Failed to load video</div>`;
+    }
+}
+
 // Obsidian
 async function loadObsidian() {
     const card = document.getElementById('obsidian-card');
@@ -449,6 +474,7 @@ loadNews();
 loadSports();
 loadGuitar();
 loadComic();
+loadYouTube();
 loadSong();
 loadQuote();
 loadObsidian();

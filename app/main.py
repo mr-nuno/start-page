@@ -4,7 +4,7 @@ import logging
 from flask import Flask, jsonify, request, send_from_directory
 
 from app.config import CACHE_TTL
-from app.services import weather, news, sports, system, guitar, comic, seinfeld, songofday, quotes, obsidian
+from app.services import weather, news, sports, system, guitar, comic, seinfeld, songofday, quotes, obsidian, youtube
 
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger(__name__)
@@ -32,7 +32,7 @@ def _get_cached(key, ttl, fetch_fn):
 
 def _background_refresh():
     while True:
-        for key, fn in [("weather", weather.fetch), ("news", news.fetch), ("sports", sports.fetch), ("guitar", guitar.fetch), ("comic", comic.fetch), ("song", songofday.fetch)]:
+        for key, fn in [("weather", weather.fetch), ("news", news.fetch), ("sports", sports.fetch), ("guitar", guitar.fetch), ("comic", comic.fetch), ("song", songofday.fetch), ("youtube", youtube.fetch)]:
             try:
                 data = fn()
                 _cache[key] = {"data": data, "time": time.time()}
@@ -90,6 +90,11 @@ def api_song():
 @app.route("/api/quote")
 def api_quote():
     return jsonify(_get_cached("quote", 86400, quotes.fetch))
+
+
+@app.route("/api/youtube")
+def api_youtube():
+    return jsonify(_get_cached("youtube", 3600, youtube.fetch))
 
 
 @app.route("/api/obsidian")
