@@ -11,7 +11,7 @@ WEATHER_URL = (
 
 NEWS_FEEDS = {
     "local": "https://www.svt.se/nyheter/lokalt/norrbotten/rss.xml",
-    "global": "https://feeds.bbci.co.uk/news/rss.xml",
+    "global": "https://www.dn.se/rss/",
 }
 
 NEWS_ITEMS_LIMIT = 8

@@ -533,6 +533,13 @@ body::before {
     color: var(--accent-light);
 }
 
+.news-item .news-summary {
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    line-height: 1.5;
+    margin-top: 4px;
+}
+
 .news-item .news-time {
     color: var(--text-dim);
     font-size: 0.72rem;
@@ -688,6 +695,157 @@ body::before {
     font-size: 0.95rem;
     line-height: 1.8;
     font-style: italic;
+}
+
+/* ========== OBSIDIAN ========== */
+.obs-input-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.obs-input {
+    flex: 1;
+    padding: 12px 16px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xs);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.obs-input:focus {
+    border-color: var(--accent);
+}
+
+.obs-input::placeholder {
+    color: var(--text-dim);
+}
+
+.obs-btn {
+    padding: 12px 20px;
+    background: rgba(124, 108, 255, 0.15);
+    border: 1px solid rgba(124, 108, 255, 0.25);
+    border-radius: var(--radius-xs);
+    color: var(--accent-light);
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.obs-btn:hover {
+    background: rgba(124, 108, 255, 0.25);
+    border-color: var(--accent);
+}
+
+.obs-section {
+    margin-bottom: 18px;
+}
+
+.obs-section:last-child {
+    margin-bottom: 0;
+}
+
+.obs-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+}
+
+.obs-tasks {
+    list-style: none;
+}
+
+.obs-task {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: var(--radius-xs);
+    transition: background 0.2s;
+    margin-bottom: 4px;
+}
+
+.obs-task:hover {
+    background: var(--bg-surface);
+}
+
+.obs-checkbox {
+    cursor: pointer;
+    font-size: 1.1rem;
+    color: var(--accent-light);
+    flex-shrink: 0;
+    transition: color 0.2s;
+}
+
+.obs-checkbox:hover {
+    color: var(--green);
+}
+
+.obs-task-text {
+    flex: 1;
+    font-size: 0.88rem;
+    color: var(--text);
+}
+
+.obs-task-file {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    letter-spacing: 0.5px;
+}
+
+.obs-task-done .obs-task-text {
+    text-decoration: line-through;
+    color: var(--text-dim);
+}
+
+.obs-task-done .obs-checkbox {
+    color: var(--green);
+}
+
+.obs-daily {
+    max-height: 250px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-hover) transparent;
+    padding: 14px;
+    background: var(--bg-surface);
+    border-radius: var(--radius-xs);
+    border: 1px solid var(--border);
+}
+
+.obs-daily pre {
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    color: var(--text-mid);
+    line-height: 1.8;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.obs-recent {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.obs-note-tag {
+    display: inline-block;
+    padding: 5px 14px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    font-size: 0.78rem;
+    color: var(--text-mid);
+    letter-spacing: 0.3px;
 }
 
 /* ========== SONG OF THE DAY ========== */

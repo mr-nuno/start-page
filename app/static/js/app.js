@@ -46,11 +46,12 @@ const H2 = {
     weather: '<h2><span class="icon">&#9788;</span> Luleå</h2>',
     system: '<h2><span class="icon">&#9881;</span> System</h2>',
     local: '<h2><span class="icon">&#9878;</span> Norrbotten</h2>',
-    global: '<h2><span class="icon">&#127760;</span> World</h2>',
+    global: '<h2><span class="icon">&#127760;</span> Dagens Nyheter</h2>',
     guitar: '<h2><span class="icon">&#127928;</span> Chord of the Day</h2>',
     comic: '<h2><span class="icon">&#128214;</span> Calvin & Hobbes</h2>',
     hockey: '<h2><span class="icon">&#127954;</span> Luleå Hockey</h2>',
     song: '<h2><span class="icon">&#127925;</span> Song of the Day</h2>',
+    obsidian: '<h2><span class="icon">&#128218;</span> Obsidian</h2>',
 };
 
 // Weather
@@ -138,12 +139,15 @@ async function loadNews() {
 
         function renderNewsList(items) {
             if (!items || items.length === 0) return '<div class="error">No news available</div>';
-            return `<ul class="news-list">${items.map(item => `
-                <li class="news-item">
+            return `<ul class="news-list">${items.map(item => {
+                const summary = item.summary ? item.summary.replace(/<[^>]*>/g, '') : '';
+                const trimmed = summary.length > 150 ? summary.substring(0, 150) + '…' : summary;
+                return `<li class="news-item">
                     <a href="${item.link}" target="_blank" rel="noopener">${item.title}</a>
+                    ${trimmed ? `<div class="news-summary">${trimmed}</div>` : ''}
                     <div class="news-time">${timeAgo(item.published)}</div>
-                </li>
-            `).join('')}</ul>`;
+                </li>`;
+            }).join('')}</ul>`;
         }
 
         localCard.innerHTML = `${H2.local}${renderNewsList(n.local)}`;
@@ -290,6 +294,102 @@ async function loadSeinfeld() {
     }
 }
 
+// Obsidian
+async function loadObsidian() {
+    const card = document.getElementById('obsidian-card');
+    try {
+        const o = await fetchJSON('/api/obsidian');
+
+        let tasksHTML = '';
+        if (o.tasks && o.tasks.length > 0) {
+            tasksHTML = `<div class="obs-section">
+                <div class="obs-label">Tasks</div>
+                <ul class="obs-tasks">${o.tasks.map(t => `
+                    <li class="obs-task" data-file="${t.file}" data-line="${t.line}">
+                        <span class="obs-checkbox" onclick="toggleTask(this)">☐</span>
+                        <span class="obs-task-text">${t.text}</span>
+                        <span class="obs-task-file">${t.file.replace('Daily Notes/', '')}</span>
+                    </li>
+                `).join('')}</ul>
+            </div>`;
+        }
+
+        let dailyHTML = '';
+        if (o.daily_note) {
+            const escaped = o.daily_note.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+            dailyHTML = `<div class="obs-section">
+                <div class="obs-label">Daily Note — ${o.date}</div>
+                <div class="obs-daily"><pre>${escaped}</pre></div>
+            </div>`;
+        }
+
+        let recentHTML = '';
+        if (o.recent_notes && o.recent_notes.length > 0) {
+            recentHTML = `<div class="obs-section">
+                <div class="obs-label">Recent</div>
+                <div class="obs-recent">${o.recent_notes.map(n => `<span class="obs-note-tag">${n.name}</span>`).join('')}</div>
+            </div>`;
+        }
+
+        card.innerHTML = `
+            ${H2.obsidian}
+            <div class="obs-input-row">
+                <input type="text" id="obs-input" class="obs-input" placeholder="Add note or task (prefix with [ ] for task)..." />
+                <button class="obs-btn" onclick="addObsidianNote()">+</button>
+            </div>
+            ${tasksHTML}
+            ${dailyHTML}
+            ${recentHTML}
+        `;
+
+        document.getElementById('obs-input').addEventListener('keydown', e => {
+            if (e.key === 'Enter') addObsidianNote();
+        });
+    } catch (e) {
+        card.innerHTML = `${H2.obsidian}<div class="error">Failed to load Obsidian</div>`;
+    }
+}
+
+async function addObsidianNote() {
+    const input = document.getElementById('obs-input');
+    const text = input.value.trim();
+    if (!text) return;
+
+    const isTask = text.startsWith('[ ] ') || text.startsWith('[] ');
+    const cleanText = isTask ? text.replace(/^\[[\s]*\]\s*/, '') : text;
+    const url = isTask ? '/api/obsidian/task' : '/api/obsidian/note';
+
+    try {
+        await fetch(url, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({text: cleanText})
+        });
+        input.value = '';
+        loadObsidian();
+    } catch (e) {
+        console.error('Failed to add note:', e);
+    }
+}
+
+async function toggleTask(el) {
+    const li = el.closest('.obs-task');
+    const file = li.dataset.file;
+    const line = parseInt(li.dataset.line);
+    try {
+        await fetch('/api/obsidian/toggle', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({file, line})
+        });
+        li.classList.add('obs-task-done');
+        el.textContent = '☑';
+        setTimeout(loadObsidian, 500);
+    } catch (e) {
+        console.error('Failed to toggle task:', e);
+    }
+}
+
 // Song of the day
 async function loadSong() {
     const card = document.getElementById('song-card');
@@ -351,6 +451,7 @@ loadGuitar();
 loadComic();
 loadSong();
 loadQuote();
+loadObsidian();
 
 // Refresh intervals
 setInterval(loadSystem, 30000);

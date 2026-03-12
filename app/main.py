@@ -1,10 +1,10 @@
 import time
 import threading
 import logging
-from flask import Flask, jsonify, send_from_directory
+from flask import Flask, jsonify, request, send_from_directory
 
 from app.config import CACHE_TTL
-from app.services import weather, news, sports, system, guitar, comic, seinfeld, songofday, quotes
+from app.services import weather, news, sports, system, guitar, comic, seinfeld, songofday, quotes, obsidian
 
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger(__name__)
@@ -90,6 +90,39 @@ def api_song():
 @app.route("/api/quote")
 def api_quote():
     return jsonify(_get_cached("quote", 86400, quotes.fetch))
+
+
+@app.route("/api/obsidian")
+def api_obsidian():
+    return jsonify(obsidian.fetch())
+
+
+@app.route("/api/obsidian/note", methods=["POST"])
+def api_obsidian_note():
+    data = request.get_json(force=True)
+    text = data.get("text", "").strip()
+    if not text:
+        return jsonify({"ok": False, "error": "Empty note"}), 400
+    return jsonify(obsidian.append_note(text))
+
+
+@app.route("/api/obsidian/task", methods=["POST"])
+def api_obsidian_task():
+    data = request.get_json(force=True)
+    text = data.get("text", "").strip()
+    if not text:
+        return jsonify({"ok": False, "error": "Empty task"}), 400
+    return jsonify(obsidian.add_task(text))
+
+
+@app.route("/api/obsidian/toggle", methods=["POST"])
+def api_obsidian_toggle():
+    data = request.get_json(force=True)
+    filepath = data.get("file", "")
+    line = data.get("line", 0)
+    if not filepath or not line:
+        return jsonify({"ok": False, "error": "Missing file/line"}), 400
+    return jsonify(obsidian.toggle_task(filepath, int(line)))
 
 
 # Start background refresh thread
