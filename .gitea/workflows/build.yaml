@@ -1,0 +1,20 @@
+name: Build and Push
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Login to Gitea Registry
+        run: docker login gitea.pew.local -u peter -p peter
+
+      - name: Build and push
+        run: |
+          docker build -t gitea.pew.local/peter/start-page:${{ github.sha }} -t gitea.pew.local/peter/start-page:latest .
+          docker push gitea.pew.local/peter/start-page:${{ github.sha }}
+          docker push gitea.pew.local/peter/start-page:latest
