@@ -5,44 +5,28 @@ Personal browser start page dashboard running on k3s at `https://start.pew.local
 ## Stack
 
 - **App:** Flask + Gunicorn (Python 3.12)
-- **Deploy:** k3s with Helm, nginx ingress, mkcert TLS (`*.pew.local`)
+- **Deploy:** k3s with Argo CD GitOps, nginx ingress, mkcert TLS (`*.pew.local`)
+- **Registry:** `registry.pew.local`
+- **GitOps repo:** `~/Projects/k3s-gitops`
 - **Host:** `192.168.86.249` (local access only)
 
-## Update workflow
-
-After making changes to the app:
+## Deploy a code change
 
 ```bash
-# 1. Rebuild the image
-podman build -t start-page-startpage:latest .
+TAG=$(date +%s)
+podman build -t registry.pew.local/start-page:$TAG .
+podman push registry.pew.local/start-page:$TAG
 
-# 2. Import into k3s containerd
-podman save docker.io/library/start-page-startpage:latest | sudo k3s ctr images import -
-
-# 3. Restart the pod to pick up the new image
-kubectl rollout restart deployment start-page
-
-# 4. Watch rollout
-kubectl rollout status deployment start-page
+cd ~/Projects/k3s-gitops
+sed -i "s/tag: .*/tag: \"$TAG\"/" apps/start-page/values.yaml
+git add -A && git commit -m "start-page: $TAG"
 ```
 
-## Helm chart
+Argo CD picks up the commit and rolls out the new image.
 
-The chart lives in `chart/`. To change configuration:
+## Deploy a config change
 
-```bash
-# Edit values
-vim chart/values.yaml
-
-# Apply changes
-helm upgrade start-page ./chart
-```
-
-To uninstall:
-
-```bash
-helm uninstall start-page
-```
+Edit `~/Projects/k3s-gitops/apps/start-page/values.yaml`, commit. Argo CD auto-syncs.
 
 ## Volumes
 
