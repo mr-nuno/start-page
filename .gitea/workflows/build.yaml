@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Checkout
         run: |
-          git clone --depth 1 --branch ${{ github.ref_name }} http://gitea-http.default.svc.cluster.local:3000/peter/start-page.git .
+          git clone --depth 1 --branch ${{ github.ref_name }} http://peter:peter@gitea-http.default.svc.cluster.local:3000/peter/start-page.git .
           git checkout ${{ github.sha }}
 
       - name: Login to Gitea Registry
