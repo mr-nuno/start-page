@@ -14,10 +14,10 @@ jobs:
           git checkout ${{ github.sha }}
 
       - name: Login to Gitea Registry
-        run: docker login gitea.pew.local -u peter -p peter
+        run: docker login gitea-http.default.svc.cluster.local:3000 -u peter -p peter
 
       - name: Build and push
         run: |
-          docker build -t gitea.pew.local/peter/start-page:${{ github.sha }} -t gitea.pew.local/peter/start-page:latest .
-          docker push gitea.pew.local/peter/start-page:${{ github.sha }}
-          docker push gitea.pew.local/peter/start-page:latest
+          docker build -t gitea-http.default.svc.cluster.local:3000/peter/start-page:${{ github.sha }} -t gitea-http.default.svc.cluster.local:3000/peter/start-page:latest .
+          docker push gitea-http.default.svc.cluster.local:3000/peter/start-page:${{ github.sha }}
+          docker push gitea-http.default.svc.cluster.local:3000/peter/start-page:latest
