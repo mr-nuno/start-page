@@ -8,7 +8,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        run: |
+          git clone --depth 1 --branch ${{ github.ref_name }} http://gitea-http.default.svc.cluster.local:3000/peter/start-page.git .
+          git checkout ${{ github.sha }}
 
       - name: Login to Gitea Registry
         run: docker login gitea.pew.local -u peter -p peter
