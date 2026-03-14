@@ -1,0 +1,13 @@
+**/bin/
+**/obj/
+**/TestResults/
+**/.vs/
+**/.vscode/
+**/.idea/
+**/*.user
+app/
+*.py
+requirements.txt
+chart/
+.gitea/
+.claude/

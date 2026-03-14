@@ -1,9 +1,9 @@
 services:
-  startpage:
+  api:
     build: .
     container_name: start-page
     ports:
-      - "8080:5000"
+      - "8080:8080"
     volumes:
       - /sys/class/thermal:/sys/class/thermal:ro
       - /sys/class/hwmon:/sys/class/hwmon:ro
@@ -12,3 +12,5 @@ services:
     restart: unless-stopped
     environment:
       - TZ=Europe/Stockholm
+      - Vault__VaultPath=/vault
+      - Vault__DailyNotesFolder=Daily Notes

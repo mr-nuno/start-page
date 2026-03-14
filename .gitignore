@@ -1,3 +1,12 @@
+## .NET
+bin/
+obj/
+*.user
+*.suo
+
+## Python (legacy)
 __pycache__/
 *.pyc
+
+## Environment
 .env
