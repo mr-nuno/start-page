@@ -1,3 +1,4 @@
+using Pew.Dashboard.Application.Common.Interfaces;
 using System.Globalization;
 using System.Text.Json;
 using Microsoft.Extensions.Caching.Memory;
@@ -5,7 +6,9 @@ using Microsoft.Extensions.Options;
 using Pew.Dashboard.Core;
 using Serilog;
 
-namespace Pew.Dashboard.Application.Features.Weather;
+using Pew.Dashboard.Application.Features.Weather;
+
+namespace Pew.Dashboard.Infrastructure.Services.Weather;
 
 public sealed class WeatherService(
     HttpClient httpClient,

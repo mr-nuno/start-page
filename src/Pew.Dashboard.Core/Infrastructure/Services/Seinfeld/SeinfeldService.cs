@@ -1,6 +1,8 @@
 using Pew.Dashboard.Application.Common.Interfaces;
 
-namespace Pew.Dashboard.Application.Features.Seinfeld;
+using Pew.Dashboard.Application.Features.Seinfeld;
+
+namespace Pew.Dashboard.Infrastructure.Services.Seinfeld;
 
 public sealed class SeinfeldService(IDateTimeProvider dateTimeProvider) : ISeinfeldService
 {

@@ -1,5 +1,6 @@
 using Ardalis.Result;
 using MediatR;
+using Pew.Dashboard.Application.Common.Interfaces;
 
 namespace Pew.Dashboard.Application.Features.Weather.GetWeather;
 

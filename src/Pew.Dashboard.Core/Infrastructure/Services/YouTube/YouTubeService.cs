@@ -1,9 +1,12 @@
+using Pew.Dashboard.Application.Common.Interfaces;
 using System.ServiceModel.Syndication;
 using System.Xml;
 using Microsoft.Extensions.Caching.Memory;
 using Serilog;
 
-namespace Pew.Dashboard.Application.Features.YouTube;
+using Pew.Dashboard.Application.Features.YouTube;
+
+namespace Pew.Dashboard.Infrastructure.Services.YouTube;
 
 public sealed class YouTubeService(
     HttpClient httpClient,

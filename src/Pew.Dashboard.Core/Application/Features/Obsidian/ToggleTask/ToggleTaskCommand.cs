@@ -1,3 +1,4 @@
+using Pew.Dashboard.Application.Common.Interfaces;
 using Ardalis.Result;
 using FastEndpoints;
 using FluentValidation;

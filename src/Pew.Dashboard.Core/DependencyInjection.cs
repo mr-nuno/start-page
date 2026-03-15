@@ -14,6 +14,17 @@ using Pew.Dashboard.Application.Features.Weather;
 using Pew.Dashboard.Application.Features.YouTube;
 using Pew.Dashboard.Infrastructure.BackgroundServices;
 using Pew.Dashboard.Infrastructure.Services;
+using Pew.Dashboard.Infrastructure.Services.Comic;
+using Pew.Dashboard.Infrastructure.Services.Guitar;
+using Pew.Dashboard.Infrastructure.Services.News;
+using Pew.Dashboard.Infrastructure.Services.Obsidian;
+using Pew.Dashboard.Infrastructure.Services.Quote;
+using Pew.Dashboard.Infrastructure.Services.Seinfeld;
+using Pew.Dashboard.Infrastructure.Services.Song;
+using Pew.Dashboard.Infrastructure.Services.Sports;
+using Pew.Dashboard.Infrastructure.Services.SystemInfo;
+using Pew.Dashboard.Infrastructure.Services.Weather;
+using Pew.Dashboard.Infrastructure.Services.YouTube;
 
 namespace Pew.Dashboard.Core;
 
