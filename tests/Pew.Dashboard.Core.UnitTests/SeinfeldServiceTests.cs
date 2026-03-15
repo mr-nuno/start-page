@@ -1,6 +1,7 @@
 using NSubstitute;
 using Pew.Dashboard.Application.Common.Interfaces;
 using Pew.Dashboard.Application.Features.Seinfeld;
+using Pew.Dashboard.Infrastructure.Services.Seinfeld;
 using Shouldly;
 
 namespace Pew.Dashboard.Core.UnitTests;

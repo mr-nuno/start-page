@@ -3,7 +3,9 @@ using Microsoft.Extensions.Caching.Memory;
 using Pew.Dashboard.Application.Common.Interfaces;
 using ILogger = Serilog.ILogger;
 
-namespace Pew.Dashboard.Application.Features.Comic;
+using Pew.Dashboard.Application.Features.Comic;
+
+namespace Pew.Dashboard.Infrastructure.Services.Comic;
 
 public sealed class ComicService(HttpClient httpClient, IMemoryCache cache, IDateTimeProvider dateTimeProvider) : IComicService
 {

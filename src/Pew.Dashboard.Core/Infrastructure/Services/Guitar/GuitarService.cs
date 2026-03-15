@@ -2,7 +2,9 @@ using System.Globalization;
 using System.Text;
 using Pew.Dashboard.Application.Common.Interfaces;
 
-namespace Pew.Dashboard.Application.Features.Guitar;
+using Pew.Dashboard.Application.Features.Guitar;
+
+namespace Pew.Dashboard.Infrastructure.Services.Guitar;
 
 public sealed class GuitarService(IDateTimeProvider dateTimeProvider) : IGuitarService
 {

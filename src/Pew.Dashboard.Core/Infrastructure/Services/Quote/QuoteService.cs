@@ -1,6 +1,8 @@
 using Pew.Dashboard.Application.Common.Interfaces;
 
-namespace Pew.Dashboard.Application.Features.Quote;
+using Pew.Dashboard.Application.Features.Quote;
+
+namespace Pew.Dashboard.Infrastructure.Services.Quote;
 
 public sealed class QuoteService(IDateTimeProvider dateTimeProvider) : IQuoteService
 {

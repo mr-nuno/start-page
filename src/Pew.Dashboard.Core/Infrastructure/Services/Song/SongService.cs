@@ -3,7 +3,9 @@ using Microsoft.Extensions.Caching.Memory;
 using Pew.Dashboard.Application.Common.Interfaces;
 using Serilog;
 
-namespace Pew.Dashboard.Application.Features.Song;
+using Pew.Dashboard.Application.Features.Song;
+
+namespace Pew.Dashboard.Infrastructure.Services.Song;
 
 public sealed class SongService(
     HttpClient httpClient,

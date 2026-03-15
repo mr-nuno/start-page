@@ -1,3 +1,4 @@
+using Pew.Dashboard.Application.Common.Interfaces;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using AngleSharp;
@@ -5,7 +6,9 @@ using AngleSharp.Dom;
 using Microsoft.Extensions.Caching.Memory;
 using ILogger = Serilog.ILogger;
 
-namespace Pew.Dashboard.Application.Features.Sports;
+using Pew.Dashboard.Application.Features.Sports;
+
+namespace Pew.Dashboard.Infrastructure.Services.Sports;
 
 public sealed class SportsService(HttpClient httpClient, IMemoryCache cache) : ISportsService
 {

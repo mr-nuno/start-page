@@ -1,8 +1,11 @@
+using Pew.Dashboard.Application.Common.Interfaces;
 using System.Globalization;
 using Microsoft.Extensions.Caching.Memory;
 using ILogger = Serilog.ILogger;
 
-namespace Pew.Dashboard.Application.Features.SystemInfo;
+using Pew.Dashboard.Application.Features.SystemInfo;
+
+namespace Pew.Dashboard.Infrastructure.Services.SystemInfo;
 
 public sealed class SystemService(IMemoryCache cache) : ISystemService
 {

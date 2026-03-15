@@ -4,7 +4,9 @@ using Pew.Dashboard.Application.Common.Interfaces;
 using Pew.Dashboard.Core;
 using ILogger = Serilog.ILogger;
 
-namespace Pew.Dashboard.Application.Features.Obsidian;
+using Pew.Dashboard.Application.Features.Obsidian;
+
+namespace Pew.Dashboard.Infrastructure.Services.Obsidian;
 
 public sealed class VaultService(IOptions<VaultOptions> options, IDateTimeProvider dateTimeProvider) : IVaultService
 {

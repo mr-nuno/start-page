@@ -1,6 +1,7 @@
 using NSubstitute;
 using Pew.Dashboard.Application.Common.Interfaces;
 using Pew.Dashboard.Application.Features.Guitar;
+using Pew.Dashboard.Infrastructure.Services.Guitar;
 using Shouldly;
 
 namespace Pew.Dashboard.Core.UnitTests;

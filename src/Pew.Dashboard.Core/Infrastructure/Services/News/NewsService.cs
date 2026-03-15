@@ -1,3 +1,4 @@
+using Pew.Dashboard.Application.Common.Interfaces;
 using System.ServiceModel.Syndication;
 using System.Text.RegularExpressions;
 using System.Xml;
@@ -6,7 +7,9 @@ using Microsoft.Extensions.Options;
 using Pew.Dashboard.Core;
 using Serilog;
 
-namespace Pew.Dashboard.Application.Features.News;
+using Pew.Dashboard.Application.Features.News;
+
+namespace Pew.Dashboard.Infrastructure.Services.News;
 
 public sealed partial class NewsService(
     HttpClient httpClient,

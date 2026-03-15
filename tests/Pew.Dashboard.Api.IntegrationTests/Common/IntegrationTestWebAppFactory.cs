@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using NSubstitute;
+using Pew.Dashboard.Application.Common.Interfaces;
 using Pew.Dashboard.Application.Features.Comic;
 using Pew.Dashboard.Application.Features.Guitar;
 using Pew.Dashboard.Application.Features.News;

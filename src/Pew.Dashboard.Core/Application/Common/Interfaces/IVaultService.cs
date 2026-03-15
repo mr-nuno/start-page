@@ -1,6 +1,8 @@
 using Ardalis.Result;
 
-namespace Pew.Dashboard.Application.Features.Obsidian;
+using Pew.Dashboard.Application.Features.Obsidian;
+
+namespace Pew.Dashboard.Application.Common.Interfaces;
 
 public interface IVaultService
 {
