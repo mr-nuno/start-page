@@ -251,6 +251,41 @@ body::before {
     box-shadow: 0 0 6px rgba(46, 204, 113, 0.4);
 }
 
+/* Version badge */
+.version-badge {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 12px;
+}
+
+.version-badge .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    font-size: 0.72rem;
+    color: var(--text-mid);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+
+.version-badge .badge:hover {
+    opacity: 1;
+}
+
+.version-badge .badge .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 6px rgba(124, 108, 255, 0.4);
+}
+
 /* Grid */
 .grid {
     display: grid;

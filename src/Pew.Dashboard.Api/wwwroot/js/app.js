@@ -469,7 +469,17 @@ async function loadQuote() {
     }
 }
 
+// Version badge
+async function loadVersion() {
+    try {
+        const v = await fetchJSON('/api/version');
+        document.getElementById('version-badge').innerHTML =
+            `<span class="badge"><span class="dot"></span>v${v.version}</span>`;
+    } catch { }
+}
+
 // Initial load
+loadVersion();
 loadSeinfeld();
 loadWeather();
 loadSystem();
