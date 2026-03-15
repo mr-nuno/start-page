@@ -5,9 +5,6 @@
 **/.vscode/
 **/.idea/
 **/*.user
-app/
-*.py
-requirements.txt
 chart/
 .gitea/
 .claude/

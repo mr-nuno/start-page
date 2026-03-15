@@ -4,11 +4,20 @@ Personal browser start page dashboard running on k3s at `https://start.pew.local
 
 ## Stack
 
-- **App:** Flask + Gunicorn (Python 3.12)
+- **API:** .NET 10 Web API (FastEndpoints, MediatR, Serilog)
+- **Frontend:** Vanilla JS served from `wwwroot/`
 - **Deploy:** k3s with Argo CD GitOps, nginx ingress, mkcert TLS (`*.pew.local`)
 - **Registry:** `registry.pew.local`
 - **GitOps repo:** `~/Projects/k3s-gitops`
 - **Host:** `192.168.86.249` (local access only)
+
+## Local development
+
+```bash
+docker compose up --build
+```
+
+Dashboard available at `http://localhost:8080`.
 
 ## Deploy a code change
 
