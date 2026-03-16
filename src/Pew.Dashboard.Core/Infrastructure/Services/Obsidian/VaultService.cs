@@ -68,13 +68,17 @@ public sealed class VaultService(IOptions<VaultOptions> options, IDateTimeProvid
         }
 
         if (!File.Exists(fullPath))
+        {
             return Task.FromResult(Result.NotFound("File not found"));
+        }
 
         var lines = File.ReadAllLines(fullPath);
         var index = lineNumber - 1;
 
         if (index < 0 || index >= lines.Length)
+        {
             return Task.FromResult(Result.NotFound("Line not found"));
+        }
 
         var line = lines[index];
 
@@ -96,7 +100,9 @@ public sealed class VaultService(IOptions<VaultOptions> options, IDateTimeProvid
         var tasks = new List<VaultTask>();
 
         if (!Directory.Exists(VaultPath))
+        {
             return tasks;
+        }
 
         var files = Directory.EnumerateFiles(VaultPath, "*.md", SearchOption.AllDirectories)
             .Select(f => new FileInfo(f))
@@ -108,7 +114,9 @@ public sealed class VaultService(IOptions<VaultOptions> options, IDateTimeProvid
 
             // Skip directories starting with "."
             if (relativePath.Split(Path.DirectorySeparatorChar).Any(part => part.StartsWith('.')))
+            {
                 continue;
+            }
 
             try
             {
@@ -119,12 +127,16 @@ public sealed class VaultService(IOptions<VaultOptions> options, IDateTimeProvid
                     var stripped = lines[i].Trim();
 
                     if (!stripped.StartsWith("- [ ] ", StringComparison.Ordinal))
+                    {
                         continue;
+                    }
 
                     tasks.Add(new VaultTask(stripped[6..], relativePath, i + 1));
 
                     if (tasks.Count >= limit)
+                    {
                         return tasks;
+                    }
                 }
             }
             catch (Exception)
@@ -139,7 +151,9 @@ public sealed class VaultService(IOptions<VaultOptions> options, IDateTimeProvid
     private List<RecentNote> GetRecentNotes(int limit)
     {
         if (!Directory.Exists(VaultPath))
+        {
             return [];
+        }
 
         return Directory.EnumerateFiles(VaultPath, "*.md", SearchOption.AllDirectories)
             .Select(f => new FileInfo(f))

@@ -18,7 +18,9 @@ public sealed class SongService(
     public async Task<SongResponse> GetSongAsync(CancellationToken ct)
     {
         if (cache.TryGetValue(CacheKey, out SongResponse? cached) && cached is not null)
+        {
             return cached;
+        }
 
         var today = DateOnly.FromDateTime(dateTimeProvider.UtcNow.DateTime);
         var index = today.DayNumber % SongLibrary.Songs.Length;
@@ -54,7 +56,9 @@ public sealed class SongService(
             var doc = JsonDocument.Parse(json);
 
             if (doc.RootElement.TryGetProperty("lyrics", out var lyricsElement))
+            {
                 return lyricsElement.GetString();
+            }
 
             return null;
         }

@@ -19,7 +19,9 @@ public sealed class SportsService(HttpClient httpClient, IMemoryCache cache) : I
     public async Task<SportsResponse> GetSportsAsync(CancellationToken ct)
     {
         if (cache.TryGetValue(CacheKey, out SportsResponse? cached) && cached is not null)
+        {
             return cached;
+        }
 
         try
         {
@@ -57,7 +59,9 @@ public sealed class SportsService(HttpClient httpClient, IMemoryCache cache) : I
             var headers = ths.Select(th => th.TextContent.Trim().ToLowerInvariant()).ToList();
 
             if (!headers.Contains("gp") || !headers.Contains("w") || !headers.Contains("season"))
+            {
                 continue;
+            }
 
             var rows = table.QuerySelectorAll("tr");
 
@@ -65,13 +69,17 @@ public sealed class SportsService(HttpClient httpClient, IMemoryCache cache) : I
             {
                 var cells = row.QuerySelectorAll("td");
                 if (cells.Length == 0)
+                {
                     continue;
+                }
 
                 var cellTexts = cells.Select(c => c.TextContent.Trim()).ToList();
                 var rowText = string.Join(" ", cellTexts).ToLowerInvariant();
 
                 if (!rowText.Contains("2025") && !rowText.Contains("2024"))
+                {
                     continue;
+                }
 
                 var record = new Dictionary<string, string>();
                 for (var i = 0; i < Math.Min(headers.Count, cellTexts.Count); i++)
@@ -92,7 +100,9 @@ public sealed class SportsService(HttpClient httpClient, IMemoryCache cache) : I
     {
         var scriptMatch = Regex.Match(html, @"<script\s+id=""__NEXT_DATA__""[^>]*>(.*?)</script>", RegexOptions.Singleline);
         if (!scriptMatch.Success)
+        {
             return ([], null);
+        }
 
         try
         {
@@ -114,7 +124,9 @@ public sealed class SportsService(HttpClient httpClient, IMemoryCache cache) : I
                 var isAway = visitingName.Contains("lule", StringComparison.OrdinalIgnoreCase);
 
                 if (!isHome && !isAway)
+                {
                     continue;
+                }
 
                 var opponent = isHome ? visitingName : homeName;
                 var prefix = isHome ? "vs" : "@";
@@ -128,7 +140,9 @@ public sealed class SportsService(HttpClient httpClient, IMemoryCache cache) : I
                 var timeStr = "";
                 var timeMatch = Regex.Match(dateRaw, @"T(\d{2}:\d{2})");
                 if (timeMatch.Success)
+                {
                     timeStr = timeMatch.Groups[1].Value;
+                }
 
                 var hasHomeScore = g.TryGetProperty("homeTeamScore", out var hs) && hs.ValueKind == JsonValueKind.Number;
                 var hasVisitingScore = g.TryGetProperty("visitingTeamScore", out var vs) && vs.ValueKind == JsonValueKind.Number;
@@ -168,7 +182,9 @@ public sealed class SportsService(HttpClient httpClient, IMemoryCache cache) : I
     private static string GetTeamName(JsonElement game, string propertyName)
     {
         if (!game.TryGetProperty(propertyName, out var team))
+        {
             return "";
+        }
 
         if (team.ValueKind == JsonValueKind.Object)
             return team.TryGetProperty("name", out var name) ? name.GetString() ?? "" : "";

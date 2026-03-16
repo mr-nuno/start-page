@@ -17,7 +17,9 @@ public sealed class QuoteService(
     public async Task<QuoteResponse> GetQuoteOfTheDayAsync(CancellationToken ct)
     {
         if (cache.TryGetValue(CacheKey, out QuoteResponse? cached) && cached is not null)
+        {
             return cached;
+        }
 
         try
         {
@@ -42,7 +44,9 @@ public sealed class QuoteService(
             Log.Warning(ex, "Failed to fetch quote from ZenQuotes API, falling back to local library");
 
             if (cache.TryGetValue(CacheKey, out QuoteResponse? fallback) && fallback is not null)
+            {
                 return fallback;
+            }
         }
 
         return GetFallbackQuote();

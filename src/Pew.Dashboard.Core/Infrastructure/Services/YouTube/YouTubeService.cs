@@ -19,7 +19,9 @@ public sealed class YouTubeService(
     public async Task<YouTubeResponse> GetVideoAsync(CancellationToken ct)
     {
         if (cache.TryGetValue(CacheKey, out YouTubeResponse? cached) && cached is not null)
+        {
             return cached;
+        }
 
         try
         {
@@ -29,7 +31,9 @@ public sealed class YouTubeService(
 
             var latest = feed.Items.FirstOrDefault();
             if (latest is null)
+            {
                 return new YouTubeResponse(string.Empty, string.Empty, string.Empty, string.Empty, "No videos found");
+            }
 
             var videoId = ExtractVideoId(latest);
             var link = latest.Links.FirstOrDefault()?.Uri.ToString() ?? string.Empty;
@@ -51,7 +55,9 @@ public sealed class YouTubeService(
             Log.Warning(ex, "Failed to fetch YouTube feed");
 
             if (cache.TryGetValue(CacheKey, out YouTubeResponse? fallback) && fallback is not null)
+            {
                 return fallback;
+            }
 
             return new YouTubeResponse(string.Empty, string.Empty, string.Empty, string.Empty, "Failed to fetch YouTube data");
         }
@@ -73,7 +79,9 @@ public sealed class YouTubeService(
         var link = item.Links.FirstOrDefault()?.Uri.ToString() ?? string.Empty;
         var queryIndex = link.IndexOf("v=", StringComparison.Ordinal);
         if (queryIndex >= 0)
+        {
             return link[(queryIndex + 2)..].Split('&')[0];
+        }
 
         return string.Empty;
     }

@@ -16,7 +16,9 @@ public sealed class ComicService(HttpClient httpClient, IMemoryCache cache, IDat
     public async Task<ComicResponse> GetComicAsync(CancellationToken ct)
     {
         if (cache.TryGetValue(CacheKey, out ComicResponse? cached) && cached is not null)
+        {
             return cached;
+        }
 
         var today = DateOnly.FromDateTime(dateTimeProvider.UtcNow.DateTime);
         var url = $"{GoComicsBase}/{today.Year}/{today.Month:00}/{today.Day:00}";
