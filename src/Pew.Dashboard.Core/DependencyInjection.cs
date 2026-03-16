@@ -83,7 +83,10 @@ public static class DependencyInjection
         // Services without HttpClient
         services.AddSingleton<IGuitarService, GuitarService>();
         services.AddSingleton<ISeinfeldService, SeinfeldService>();
-        services.AddSingleton<IQuoteService, QuoteService>();
+        services.AddHttpClient<IQuoteService, QuoteService>(client =>
+        {
+            client.Timeout = TimeSpan.FromSeconds(10);
+        }).AddStandardResilienceHandler();
         services.AddSingleton<ISystemService, SystemService>();
         services.AddSingleton<IVaultService, VaultService>();
 
