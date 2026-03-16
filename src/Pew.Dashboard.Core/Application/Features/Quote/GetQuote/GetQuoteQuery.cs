@@ -8,10 +8,10 @@ public sealed record GetQuoteQuery : IRequest<Result<QuoteResponse>>
 {
     public sealed class Handler(IQuoteService quoteService) : IRequestHandler<GetQuoteQuery, Result<QuoteResponse>>
     {
-        public Task<Result<QuoteResponse>> Handle(GetQuoteQuery request, CancellationToken ct)
+        public async Task<Result<QuoteResponse>> Handle(GetQuoteQuery request, CancellationToken ct)
         {
-            var response = quoteService.GetQuoteOfTheDay();
-            return Task.FromResult(Result<QuoteResponse>.Success(response));
+            var response = await quoteService.GetQuoteOfTheDayAsync(ct);
+            return Result<QuoteResponse>.Success(response);
         }
     }
 }

@@ -155,7 +155,7 @@ public sealed class IntegrationTestWebAppFactory : WebApplicationFactory<Program
     private static IQuoteService CreateFakeQuoteService()
     {
         var fake = Substitute.For<IQuoteService>();
-        fake.GetQuoteOfTheDay()
+        fake.GetQuoteOfTheDayAsync(Arg.Any<CancellationToken>())
             .Returns(new QuoteResponse(
                 Quote: "The only way to do great work is to love what you do.",
                 Source: "Steve Jobs"));

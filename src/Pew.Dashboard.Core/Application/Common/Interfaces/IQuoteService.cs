@@ -4,5 +4,5 @@ namespace Pew.Dashboard.Application.Common.Interfaces;
 
 public interface IQuoteService
 {
-    QuoteResponse GetQuoteOfTheDay();
+    Task<QuoteResponse> GetQuoteOfTheDayAsync(CancellationToken ct);
 }
