@@ -22,7 +22,9 @@ public sealed partial class NewsService(
     public async Task<NewsResponse> GetNewsAsync(CancellationToken ct)
     {
         if (cache.TryGetValue(CacheKey, out NewsResponse? cached) && cached is not null)
+        {
             return cached;
+        }
 
         var opts = options.Value;
 
@@ -86,7 +88,9 @@ public sealed partial class NewsService(
     private static string StripHtml(string html)
     {
         if (string.IsNullOrWhiteSpace(html))
+        {
             return string.Empty;
+        }
 
         var result = HtmlTagRegex().Replace(html, string.Empty);
         result = System.Net.WebUtility.HtmlDecode(result);

@@ -15,7 +15,9 @@ public sealed class SystemService(IMemoryCache cache) : ISystemService
     public async Task<SystemResponse> GetSystemAsync(CancellationToken ct)
     {
         if (cache.TryGetValue(CacheKey, out SystemResponse? cached) && cached is not null)
+        {
             return cached;
+        }
 
         var memory = GetMemoryInfo();
         var disk = GetDiskInfo();
@@ -46,7 +48,9 @@ public sealed class SystemService(IMemoryCache cache) : ISystemService
                 }
 
                 if (totalKb > 0 && availableKb > 0)
-                    break;
+            {
+                break;
+            }
             }
 
             var totalGb = Math.Round(totalKb / (1024.0 * 1024.0), 1);
@@ -66,7 +70,9 @@ public sealed class SystemService(IMemoryCache cache) : ISystemService
     {
         var parts = line.Split(':', 2);
         if (parts.Length < 2)
+        {
             return 0;
+        }
 
         var value = parts[1].Trim().Replace("kB", "", StringComparison.OrdinalIgnoreCase).Trim();
         return long.TryParse(value, CultureInfo.InvariantCulture, out var result) ? result : 0;
@@ -123,13 +129,17 @@ public sealed class SystemService(IMemoryCache cache) : ISystemService
 
         // cpu user nice system idle iowait irq softirq steal
         if (parts.Length < 5)
+        {
             return (0, 0);
+        }
 
         long total = 0;
         for (var i = 1; i < parts.Length; i++)
         {
             if (long.TryParse(parts[i], CultureInfo.InvariantCulture, out var val))
+            {
                 total += val;
+            }
         }
 
         var idle = long.TryParse(parts[4], CultureInfo.InvariantCulture, out var idleVal) ? idleVal : 0;
@@ -146,7 +156,9 @@ public sealed class SystemService(IMemoryCache cache) : ISystemService
             {
                 var content = File.ReadAllText(path).Trim();
                 if (int.TryParse(content, CultureInfo.InvariantCulture, out var millidegrees))
+                {
                     return Math.Round(millidegrees / 1000.0, 1);
+                }
             }
             catch (FileNotFoundException)
             {

@@ -28,17 +28,29 @@ public sealed class GuitarService(IDateTimeProvider dateTimeProvider) : IGuitarS
     private static string GetTip(ChordDefinition chord)
     {
         if (chord.Barre.HasValue)
+        {
             return $"Barre chord \u2014 lay your index finger flat across fret {chord.Barre.Value}";
+        }
         if (chord.Name.Contains("Minor"))
+        {
             return "Minor chord \u2014 has a darker, sadder sound";
+        }
         if (chord.Name.Contains('7'))
+        {
             return "Seventh chord \u2014 adds tension and wants to resolve";
+        }
         if (chord.Name.Contains("Sus"))
+        {
             return "Suspended chord \u2014 neither major nor minor, creates anticipation";
+        }
         if (chord.Name.Contains("Add"))
+        {
             return "Add chord \u2014 enriches the basic triad with an extra color tone";
+        }
         if (chord.Name.Contains("Power"))
+        {
             return "Power chord \u2014 just root and fifth, great for rock and punk";
+        }
 
         return "Open chord \u2014 one of the essential shapes every guitarist should know";
     }
@@ -108,7 +120,9 @@ public sealed class GuitarService(IDateTimeProvider dateTimeProvider) : IGuitarS
             for (var i = 0; i < frets.Length; i++)
             {
                 if (frets[i] == barre.Value)
+                {
                     barreStrings.Add(i);
+                }
             }
 
             if (barreStrings.Count >= 2)
@@ -155,7 +169,9 @@ public sealed class GuitarService(IDateTimeProvider dateTimeProvider) : IGuitarS
                         }
 
                         if (i != minBarreIndex)
+                        {
                             continue;
+                        }
                     }
 
                     svg.Append(CultureInfo.InvariantCulture, $"<circle cx=\"{x}\" cy=\"{y}\" r=\"9\" fill=\"url(#dotGrad)\"/>");

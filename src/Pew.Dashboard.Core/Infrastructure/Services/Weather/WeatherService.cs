@@ -21,7 +21,9 @@ public sealed class WeatherService(
     public async Task<WeatherResponse> GetWeatherAsync(CancellationToken ct)
     {
         if (cache.TryGetValue(CacheKey, out WeatherResponse? cached) && cached is not null)
+        {
             return cached;
+        }
 
         try
         {
@@ -86,7 +88,9 @@ public sealed class WeatherService(
             Log.Warning(ex, "Failed to fetch weather data, returning cached data if available");
 
             if (cache.TryGetValue(CacheKey, out WeatherResponse? fallback) && fallback is not null)
+            {
                 return fallback;
+            }
 
             throw;
         }

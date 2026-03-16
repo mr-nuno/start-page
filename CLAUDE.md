@@ -253,6 +253,7 @@ This applies to PR descriptions, wiki pages, and any other Azure DevOps markdown
 - No `#region` blocks
 - Use `sealed` on classes that are not designed for inheritance
 - Use `CancellationToken` named `ct` in all async methods
+- Always use **braces** on `if`, `else`, `for`, `foreach`, `while`, and `using` statements — no single-line bodies
 
 ---
 
