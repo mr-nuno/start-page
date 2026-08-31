@@ -63,16 +63,16 @@ function timeAgo(dateStr) {
 }
 
 const H2 = {
-    weather: '<h2><span class="icon">&#9788;</span> Lule\u00e5</h2>',
-    system: '<h2><span class="icon">&#9881;</span> System</h2>',
-    local: '<h2><span class="icon">&#9878;</span> Norrbotten</h2>',
-    global: '<h2><span class="icon">&#127760;</span> Dagens Nyheter</h2>',
-    guitar: '<h2><span class="icon">&#127928;</span> Chord of the Day</h2>',
-    comic: '<h2><span class="icon">&#128214;</span> Calvin & Hobbes</h2>',
-    hockey: '<h2><span class="icon">&#127954;</span> Lule\u00e5 Hockey</h2>',
-    song: '<h2><span class="icon">&#127925;</span> Song of the Day</h2>',
-    youtube: '<h2><span class="icon">&#127909;</span> The Daily Show</h2>',
-    obsidian: '<h2><span class="icon">&#128218;</span> Obsidian</h2>',
+    weather: '<h2><span class="title-left"><span class="icon-box">&#9788;</span> Lule\u00e5 Weather</span><button class="action-arrow-btn">&#8594;</button></h2>',
+    system: '<h2><span class="title-left"><span class="icon-box">&#9881;</span> System Status</span><button class="action-arrow-btn">&#8594;</button></h2>',
+    local: '<h2><span class="title-left"><span class="icon-box">&#9878;</span> Norrbotten News</span><button class="action-arrow-btn">&#8594;</button></h2>',
+    global: '<h2><span class="title-left"><span class="icon-box">&#127760;</span> Dagens Nyheter</span><button class="action-arrow-btn">&#8594;</button></h2>',
+    guitar: '<h2><span class="title-left"><span class="icon-box">&#127928;</span> Guitar Chord of the Day</span><button class="action-arrow-btn">&#8594;</button></h2>',
+    comic: '<h2><span class="title-left"><span class="icon-box">&#128214;</span> Calvin & Hobbes</span><button class="action-arrow-btn">&#8594;</button></h2>',
+    hockey: '<h2><span class="title-left"><span class="icon-box">&#127954;</span> Lule\u00e5 Hockey</span><button class="action-arrow-btn">&#8594;</button></h2>',
+    song: '<h2><span class="title-left"><span class="icon-box">&#127925;</span> Song of the Day</span><button class="action-arrow-btn">&#8594;</button></h2>',
+    youtube: '<h2><span class="title-left"><span class="icon-box">&#127909;</span> The Daily Show</span><button class="action-arrow-btn">&#8594;</button></h2>',
+    obsidian: '<h2><span class="title-left"><span class="icon-box">&#128218;</span> Obsidian Vault</span><button class="action-arrow-btn">&#8594;</button></h2>',
 };
 
 // Weather
@@ -269,6 +269,7 @@ async function loadGuitar() {
 // Calvin & Hobbes
 async function loadComic() {
     const card = document.getElementById('comic-card');
+    if (!card) return;
     try {
         const c = await fetchJSON('/api/comic');
 
@@ -486,7 +487,6 @@ loadSystem();
 loadNews();
 loadSports();
 loadGuitar();
-loadComic();
 loadYouTube();
 loadSong();
 loadQuote();
